@@ -6,6 +6,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+val Serif = FontFamily.Serif
+
+// 세리프 : 명조체
+// 산스 : 고딕체
+// 프린텐다드 : 고딕체
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

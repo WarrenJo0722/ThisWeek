@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -55,7 +56,15 @@ dependencies {
     // 네비게이션
     implementation(libs.androidx.navigation.compose)
 
+    // 아이콘
     implementation(libs.androidx.compose.material.icons.core)
+
+    // 파이어베이스
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+
+    // 뷰모델
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 
