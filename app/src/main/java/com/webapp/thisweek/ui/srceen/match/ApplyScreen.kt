@@ -1,5 +1,6 @@
 package com.webapp.thisweek.ui.srceen.match
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.webapp.thisweek.data.model.Place
 import com.webapp.thisweek.data.model.Weekday
 import com.webapp.thisweek.ui.common.PhonePreview
@@ -29,12 +32,18 @@ import com.webapp.thisweek.ui.common.PrimaryButton
 import com.webapp.thisweek.ui.common.VerticalSpacer
 import com.webapp.thisweek.ui.theme.Serif
 import com.webapp.thisweek.ui.theme.ThisWeekTheme
+import com.webapp.thisweek.viewmodel.MatchViewModel
+import com.webapp.thisweek.viewmodel.UserViewModel
 import java.nio.file.WatchEvent
 
 @Composable
 fun ApplyScreen(
+    userViewModel: UserViewModel = viewModel(),
+    matchViewModel: MatchViewModel = viewModel(),
     onApplied: () -> Unit
 ) {
+    val context = LocalContext.current
+
     val places = Place.entries
     val weekdays = Weekday.entries
 
@@ -104,6 +113,13 @@ fun ApplyScreen(
 
         PrimaryButton("이번 주 신청하기") {
             onApplied()
+            matchViewModel.apply(
+                userId = userViewModel.currentUserId ?: "",
+                place = selectedPlace,
+                weekday = selectedWeekday
+            ) {
+                Toast.makeText(context, "회원이 생성되었습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
@@ -112,7 +128,7 @@ fun ApplyScreen(
 @Composable
 fun ApplyScreenPreview() {
     ThisWeekTheme {
-        ApplyScreen({})
+        ApplyScreen(onApplied = {})
     }
 }
 

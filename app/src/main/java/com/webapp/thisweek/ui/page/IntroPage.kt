@@ -78,7 +78,7 @@ fun IntroPage(navController: NavController = rememberNavController()) {
                         indication = null
                     ) {
                         count++
-                        if (count == 10) {
+                        if (count == 1) {
                             navController.navigate("admin")
                         }
                     }

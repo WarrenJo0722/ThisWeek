@@ -15,11 +15,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.webapp.thisweek.ui.navigation.BottomRouter
 import com.webapp.thisweek.ui.srceen.match.MatchTabScreen
+import com.webapp.thisweek.viewmodel.MatchViewModel
+import com.webapp.thisweek.viewmodel.UserViewModel
 
 @Composable
-fun MainPage() {
+fun MainPage(
+    userViewModel: UserViewModel = viewModel(),
+    matchViewModel: MatchViewModel = viewModel()
+) {
     val tabs = listOf(BottomRouter.MatchTab, BottomRouter.ChatTab, BottomRouter.MyPageTab)
     var currentTab: BottomRouter by remember { mutableStateOf(BottomRouter.MatchTab) }
 
@@ -42,7 +48,7 @@ fun MainPage() {
             Modifier.padding(innerPadding)
         ) {
             when(currentTab) {
-                BottomRouter.MatchTab -> MatchTabScreen()
+                BottomRouter.MatchTab -> MatchTabScreen(userViewModel, matchViewModel)
                 else -> Text("페이지 구현중")
             }
         }

@@ -58,6 +58,7 @@ dependencies {
 
     // 아이콘
     implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // 파이어베이스
     implementation(platform(libs.firebase.bom))
