@@ -8,7 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.webapp.thisweek.ui.page.admin.AdminPage
 import com.webapp.thisweek.ui.page.IntroPage
+import com.webapp.thisweek.ui.page.LoginPage
 import com.webapp.thisweek.ui.page.MainPage
+import com.webapp.thisweek.ui.page.SignUpPage
 import com.webapp.thisweek.ui.page.admin.MatchAdminScreen
 import com.webapp.thisweek.ui.page.admin.RegisterPage
 import com.webapp.thisweek.ui.page.admin.UserListPage
@@ -28,10 +30,13 @@ fun AppRouter() {
 
     // 생성자 주입, 자동 주입
 
-    NavHost(navController, startDestination = "intro") {
+    NavHost(navController, startDestination = "login") {
+        // 인트로
         composable("intro") {
             IntroPage(navController = navController)
         }
+
+        // 관리자
         composable("admin") {
             AdminPage(navController = navController)
         }
@@ -42,8 +47,18 @@ fun AppRouter() {
             UserListPage(userViewModel)
         }
         composable("matchAdmin") {
-            MatchAdminScreen(matchViewModel)
+            MatchAdminScreen(userViewModel, matchViewModel)
         }
+
+        // 사용자 인증
+        composable("login") {
+            LoginPage(navController)
+        }
+        composable("signUp") {
+            SignUpPage(userViewModel)
+        }
+
+        // 메인
         composable("main") {
             MainPage(userViewModel, matchViewModel)
         }

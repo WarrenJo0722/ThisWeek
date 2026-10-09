@@ -63,6 +63,7 @@ dependencies {
     // 파이어베이스
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
 
     // 뷰모델
     implementation(libs.androidx.lifecycle.viewmodel.compose)

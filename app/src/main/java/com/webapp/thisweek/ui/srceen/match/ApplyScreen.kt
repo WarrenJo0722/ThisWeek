@@ -39,8 +39,7 @@ import java.nio.file.WatchEvent
 @Composable
 fun ApplyScreen(
     userViewModel: UserViewModel = viewModel(),
-    matchViewModel: MatchViewModel = viewModel(),
-    onApplied: () -> Unit
+    matchViewModel: MatchViewModel = viewModel()
 ) {
     val context = LocalContext.current
 
@@ -112,7 +111,6 @@ fun ApplyScreen(
         Spacer(Modifier.weight(1.0f))
 
         PrimaryButton("이번 주 신청하기") {
-            onApplied()
             matchViewModel.apply(
                 userId = userViewModel.currentUserId ?: "",
                 place = selectedPlace,
@@ -128,7 +126,7 @@ fun ApplyScreen(
 @Composable
 fun ApplyScreenPreview() {
     ThisWeekTheme {
-        ApplyScreen(onApplied = {})
+        ApplyScreen()
     }
 }
 

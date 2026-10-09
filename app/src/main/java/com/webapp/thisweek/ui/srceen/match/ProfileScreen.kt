@@ -29,10 +29,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.webapp.thisweek.R
+import com.webapp.thisweek.data.model.Gender
+import com.webapp.thisweek.data.model.User
 import com.webapp.thisweek.ui.common.ProfileText
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(user: User) {
     var isProfileBlured by remember { mutableStateOf(true) }
 
     Column(
@@ -73,15 +75,15 @@ fun ProfileScreen() {
                     Row(
                         verticalAlignment = Alignment.Bottom
                     ) {
-                        ProfileText("제나", MaterialTheme.typography.headlineLarge)
+                        ProfileText(user.nick, MaterialTheme.typography.headlineLarge)
                         Spacer(Modifier.width(8.dp))
-                        ProfileText("19")
+                        ProfileText(user.age.toString())
                     }
 
-                    ProfileText("직업 : 가수")
-                    ProfileText("MBTI : ENFP")
+                    ProfileText("직업 : ${user.job}")
+                    ProfileText("MBTI : ${user.mbti}")
                     Spacer(modifier = Modifier.height(8.dp))
-                    ProfileText("까엉!")
+                    ProfileText(user.greeting)
                 }
             }
         }
@@ -105,5 +107,14 @@ fun ProfileScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(User(
+        nick = "제나",
+        email = "",
+        password = "",
+        age = 19,
+        gender = Gender.FEMALE,
+        job = "가수",
+        mbti = "ENFP",
+        greeting = "까엉!!"
+    ))
 }

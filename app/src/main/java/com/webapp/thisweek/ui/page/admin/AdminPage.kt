@@ -52,12 +52,12 @@ fun AdminPage(navController: NavController = rememberNavController()) {
             HorizontalDivider()
 
             ListItem(
-                headlineContent = { Text("매칭 해주기") },
+                headlineContent = { Text("매칭 하기") },
                 trailingContent = {
                     Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null)
                 },
                 modifier = Modifier.clickable {
-                    navController.navigate("userList")
+                    navController.navigate("matchAdmin")
                 },
                 colors = ListItemDefaults.colors(containerColor = Color.White)
             )
