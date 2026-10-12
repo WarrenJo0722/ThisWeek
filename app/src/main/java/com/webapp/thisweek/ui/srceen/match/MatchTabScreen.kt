@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.webapp.thisweek.ui.common.PhonePreview
 import com.webapp.thisweek.ui.theme.ThisWeekTheme
 import com.webapp.thisweek.viewmodel.MatchViewModel
@@ -14,6 +16,7 @@ import com.webapp.thisweek.viewmodel.UserViewModel
 
 @Composable
 fun MatchTabScreen(
+    navController: NavController = rememberNavController(),
     userViewModel: UserViewModel = viewModel(),
     matchViewModel: MatchViewModel = viewModel()
 ) {
@@ -54,7 +57,7 @@ fun MatchTabScreen(
             if (partner == null) {
                 Text("상대방 정보 불러오는 중...")
             } else {
-                ProfileScreen(partner)
+                ProfileScreen(navController, partner)
             }
         }
     }

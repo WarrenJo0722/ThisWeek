@@ -116,7 +116,7 @@ fun ApplyScreen(
                 place = selectedPlace,
                 weekday = selectedWeekday
             ) {
-                Toast.makeText(context, "회원이 생성되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "소개팅을 신청했어요.", Toast.LENGTH_SHORT).show()
             }
         }
     }

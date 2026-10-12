@@ -9,7 +9,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -22,19 +26,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import coil3.compose.AsyncImage
 import com.webapp.thisweek.R
 import com.webapp.thisweek.data.model.Gender
 import com.webapp.thisweek.data.model.User
+import com.webapp.thisweek.ui.common.PrimaryButton
 import com.webapp.thisweek.ui.common.ProfileText
 
 @Composable
-fun ProfileScreen(user: User) {
+fun ProfileScreen(
+    navController: NavController = rememberNavController(),
+    user: User
+) {
     var isProfileBlured by remember { mutableStateOf(true) }
 
     Column(
@@ -46,14 +59,24 @@ fun ProfileScreen(user: User) {
             Box(
                 contentAlignment = Alignment.BottomStart
             ) {
-                Image(
-                    painter = painterResource(R.drawable.jena),
-                    contentDescription = "프로필 이미지",
+                AsyncImage(
+                    model = user.imageUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+
+                    // 불러오는 중에
+                    placeholder = rememberVectorPainter(Icons.Default.Person),
+
+                    // 실패했을 때
+                    error = rememberVectorPainter(Icons.Default.Person),
+
+                    // 이미지 uri가 널일때
+                    fallback = rememberVectorPainter(Icons.Default.Person),
+
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(500.dp)
                         .blur(radius = (if (isProfileBlured) 16 else 0).dp),
-                    contentScale = ContentScale.Crop
                 )
                 Box(
                     modifier = Modifier
@@ -90,16 +113,13 @@ fun ProfileScreen(user: User) {
 
         Spacer(Modifier.weight(1.0f))
 
+        PrimaryButton("대화 하기") {
+            navController.navigate("chatRoom")
+        }
+
         // 만남 완료 버튼
-        Button(
-            onClick = {
-                isProfileBlured = !isProfileBlured
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-        ) {
-            Text("만남 완료")
+        PrimaryButton("만남 완료") {
+            isProfileBlured = !isProfileBlured
         }
     }
 }
@@ -107,7 +127,7 @@ fun ProfileScreen(user: User) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(User(
+    ProfileScreen(user = User(
         nick = "제나",
         email = "",
         password = "",

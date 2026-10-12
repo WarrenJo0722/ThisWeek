@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.webapp.thisweek.ui.page.ChatRoomPage
 import com.webapp.thisweek.ui.page.admin.AdminPage
 import com.webapp.thisweek.ui.page.IntroPage
 import com.webapp.thisweek.ui.page.LoginPage
@@ -61,6 +62,11 @@ fun AppRouter() {
         // 메인
         composable("main") {
             MainPage(navController, userViewModel, matchViewModel)
+        }
+
+        // 채팅
+        composable("chatRoom") {
+            ChatRoomPage()
         }
     }
 }

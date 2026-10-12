@@ -52,7 +52,7 @@ fun MainPage(
             Modifier.padding(innerPadding)
         ) {
             when(currentTab) {
-                BottomRouter.MatchTab -> MatchTabScreen(userViewModel, matchViewModel)
+                BottomRouter.MatchTab -> MatchTabScreen(navController, userViewModel, matchViewModel)
                 BottomRouter.MyPageTab -> MyPageScreen(userViewModel) {
                     navController.navigate("intro") {
                         popUpTo("main") { inclusive = true }
