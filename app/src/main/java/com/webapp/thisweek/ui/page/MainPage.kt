@@ -16,13 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.webapp.thisweek.ui.navigation.BottomRouter
 import com.webapp.thisweek.ui.srceen.match.MatchTabScreen
+import com.webapp.thisweek.ui.srceen.mypage.MyPageScreen
 import com.webapp.thisweek.viewmodel.MatchViewModel
 import com.webapp.thisweek.viewmodel.UserViewModel
 
 @Composable
 fun MainPage(
+    navController: NavController = rememberNavController(),
     userViewModel: UserViewModel = viewModel(),
     matchViewModel: MatchViewModel = viewModel()
 ) {
@@ -49,6 +53,11 @@ fun MainPage(
         ) {
             when(currentTab) {
                 BottomRouter.MatchTab -> MatchTabScreen(userViewModel, matchViewModel)
+                BottomRouter.MyPageTab -> MyPageScreen(userViewModel) {
+                    navController.navigate("intro") {
+                        popUpTo("main") { inclusive = true }
+                    }
+                }
                 else -> Text("페이지 구현중")
             }
         }

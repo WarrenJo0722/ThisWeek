@@ -98,10 +98,12 @@ fun LoginPage(
             VerticalSpacer()
 
             PrimaryButton("로그인") {
-                userViewModel.addUser(user) {
-                    Toast.makeText(context, "회원이 생성되었습니다.", Toast.LENGTH_SHORT).show()
+                userViewModel.login(user.email, user.password) {
+                    Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
-                    user = User()
+                    navController.navigate("main") {
+                        popUpTo("intro") { inclusive = true }
+                    }
                 }
             }
 

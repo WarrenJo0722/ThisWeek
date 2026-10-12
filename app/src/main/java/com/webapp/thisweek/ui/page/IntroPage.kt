@@ -28,12 +28,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.webapp.thisweek.ui.common.PrimaryButton
+import com.webapp.thisweek.viewmodel.UserViewModel
 
 @Composable
-fun IntroPage(navController: NavController = rememberNavController()) {
+fun IntroPage(
+    navController: NavController = rememberNavController(),
+    userViewModel: UserViewModel = viewModel()
+) {
     val context = LocalContext.current
     var count by remember { mutableStateOf(0) }
 
@@ -65,8 +70,18 @@ fun IntroPage(navController: NavController = rememberNavController()) {
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(16.dp))
-                PrimaryButton("소개팅 신청하러 가기") {
-                    navController.navigate("main")
+                PrimaryButton("소개팅 하러 가기") {
+                    if (userViewModel.currentUserId == null) {
+                        // 세션 없을 때 -> 로그인 화면으로
+                        navController.navigate("login") {
+                            popUpTo("intro") { inclusive = true}
+                        }
+                    } else {
+                        // 세션 있을 때 -> 메인 화면으로
+                        navController.navigate("main") {
+                            popUpTo("intro") { inclusive = true}
+                        }
+                    }
                 }
             }
 

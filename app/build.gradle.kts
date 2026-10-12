@@ -64,9 +64,14 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
 
     // 뷰모델
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // 이미지 로딩
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
 
 

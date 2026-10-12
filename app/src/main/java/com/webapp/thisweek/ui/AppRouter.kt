@@ -30,10 +30,10 @@ fun AppRouter() {
 
     // 생성자 주입, 자동 주입
 
-    NavHost(navController, startDestination = "login") {
+    NavHost(navController, startDestination = "intro") {
         // 인트로
         composable("intro") {
-            IntroPage(navController = navController)
+            IntroPage(navController, userViewModel)
         }
 
         // 관리자
@@ -55,12 +55,12 @@ fun AppRouter() {
             LoginPage(navController)
         }
         composable("signUp") {
-            SignUpPage(userViewModel)
+            SignUpPage(navController, userViewModel)
         }
 
         // 메인
         composable("main") {
-            MainPage(userViewModel, matchViewModel)
+            MainPage(navController, userViewModel, matchViewModel)
         }
     }
 }
