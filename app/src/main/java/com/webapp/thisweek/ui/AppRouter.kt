@@ -15,6 +15,7 @@ import com.webapp.thisweek.ui.page.SignUpPage
 import com.webapp.thisweek.ui.page.admin.MatchAdminScreen
 import com.webapp.thisweek.ui.page.admin.RegisterPage
 import com.webapp.thisweek.ui.page.admin.UserListPage
+import com.webapp.thisweek.viewmodel.ChatViewModel
 import com.webapp.thisweek.viewmodel.MatchViewModel
 import com.webapp.thisweek.viewmodel.UserViewModel
 
@@ -23,6 +24,7 @@ fun AppRouter() {
     val navController = rememberNavController()
     val userViewModel: UserViewModel = viewModel()
     val matchViewModel: MatchViewModel = viewModel()
+    val chatViewModel: ChatViewModel = viewModel()
 
     // DI : 디펜던시 인젝션(의존성 주입)
     // 1. 생성자 주입
@@ -66,7 +68,7 @@ fun AppRouter() {
 
         // 채팅
         composable("chatRoom") {
-            ChatRoomPage()
+            ChatRoomPage(userViewModel, matchViewModel, chatViewModel)
         }
     }
 }

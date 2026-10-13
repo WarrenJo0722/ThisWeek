@@ -8,12 +8,19 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.play.integrity.internal.u
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
+import com.webapp.thisweek.data.api.RetrofitClient
 import com.webapp.thisweek.data.model.User
+import com.webapp.thisweek.data.repository.FirebaseUserRepository
+import com.webapp.thisweek.data.repository.RestUserRepository
+import com.webapp.thisweek.data.repository.UserRepository
+import kotlinx.coroutines.launch
 
 class UserViewModel : ViewModel() {
     private val db = Firebase.firestore
@@ -29,13 +36,25 @@ class UserViewModel : ViewModel() {
     val currentUser: User?
         get() = _userList.find { it.id == currentUserId }
 
+    private val userRepository: UserRepository = RestUserRepository()
+//    private val userRepository: UserRepository = FirebaseUserRepository()
+
     init {
         currentUserId = auth.currentUser?.uid
 
-        db.collection("users").addSnapshotListener { snapshots, exception ->
+        loadUsers()
+
+        /*db.collection("users").addSnapshotListener { snapshots, exception ->
             if (exception != null || snapshots == null) return@addSnapshotListener
             _userList.clear()
             _userList.addAll(snapshots.toObjects(User::class.java))
+        }*/
+    }
+
+    fun loadUsers() {
+        viewModelScope.launch {
+            _userList.clear()
+            _userList.addAll(userRepository.getUsers())
         }
     }
 
@@ -80,18 +99,8 @@ class UserViewModel : ViewModel() {
                                     .toString()), onFailure, onSuccess)
                             }
                     }
-                    .addOnFailureListener {  }
-
-                db.collection("users")
-                    .document(uid)
-                    .set(user)
-                    .addOnSuccessListener {
-                        currentUserId = uid
-                        onSuccess()
-                    }
                     .addOnFailureListener { e ->
-                        Log.e("UserViewModel", "유저 저장 실패", e)
-                        onFailure(e.message ?: "유저 저장 실패")
+                        onFailure(e.message ?: "사진 업로드 실패")
                     }
             }
             .addOnFailureListener { e ->

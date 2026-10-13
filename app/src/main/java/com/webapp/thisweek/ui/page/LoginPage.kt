@@ -102,7 +102,7 @@ fun LoginPage(
                     Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
                     navController.navigate("main") {
-                        popUpTo("intro") { inclusive = true }
+                        popUpTo("login") { inclusive = true }
                     }
                 }
             }

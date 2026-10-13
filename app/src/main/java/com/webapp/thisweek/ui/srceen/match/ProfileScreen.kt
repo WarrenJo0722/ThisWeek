@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -42,6 +44,7 @@ import com.webapp.thisweek.data.model.Gender
 import com.webapp.thisweek.data.model.User
 import com.webapp.thisweek.ui.common.PrimaryButton
 import com.webapp.thisweek.ui.common.ProfileText
+import com.webapp.thisweek.ui.common.VerticalSpacer
 
 @Composable
 fun ProfileScreen(
@@ -52,7 +55,8 @@ fun ProfileScreen(
 
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
     ) {
         // 프로필 사진
         Card {
@@ -113,9 +117,13 @@ fun ProfileScreen(
 
         Spacer(Modifier.weight(1.0f))
 
+        VerticalSpacer()
+
         PrimaryButton("대화 하기") {
             navController.navigate("chatRoom")
         }
+
+        VerticalSpacer()
 
         // 만남 완료 버튼
         PrimaryButton("만남 완료") {

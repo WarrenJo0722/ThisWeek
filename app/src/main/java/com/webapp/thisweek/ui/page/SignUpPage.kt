@@ -226,7 +226,7 @@ fun SignUpPage(
                     Toast.makeText(context, "회원가입 완료!", Toast.LENGTH_SHORT).show()
 
                     navController.navigate("main") {
-                        popUpTo("intro") { inclusive = true }
+                        popUpTo("login") { inclusive = true }
                     }
                 }
             }

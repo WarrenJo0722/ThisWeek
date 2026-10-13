@@ -15,7 +15,7 @@ android {
         minSdk = 26
         targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "v1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,6 +72,12 @@ dependencies {
     // 이미지 로딩
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    // REST API
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    implementation(libs.kotlinx.coroutines.play.services)
 }
 
 
